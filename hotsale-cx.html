@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hot Sale 2026 · CX Tiendanube</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.6.0/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f0f4f8;
+    min-height: 100vh;
+  }
+
+  /* ── GATE ─────────────────────────────────────────────── */
+  #gate {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: #042C53;
+    position: relative;
+    overflow: hidden;
+  }
+  #gate::before {
+    content: '';
+    position: absolute; top: -100px; left: -100px;
+    width: 400px; height: 400px; border-radius: 50%;
+    border: 80px solid #0C447C; opacity: .3;
+  }
+  #gate::after {
+    content: '';
+    position: absolute; bottom: -120px; right: -80px;
+    width: 500px; height: 500px; border-radius: 50%;
+    border: 100px solid #185FA5; opacity: .2;
+  }
+  .gate-box {
+    background: #0C447C;
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .gate-trophy { font-size: 48px; margin-bottom: 12px; }
+  .gate-title { font-size: 22px; font-weight: 500; color: #E6F1FB; margin-bottom: 8px; }
+  .gate-sub { font-size: 14px; color: #85B7EB; line-height: 1.6; margin-bottom: 2rem; }
+  .gate-input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1.5px solid #378ADD;
+    background: #042C53;
+    color: #E6F1FB;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 10px;
+    transition: border-color .2s;
+  }
+  .gate-input::placeholder { color: #378ADD; }
+  .gate-input:focus { border-color: #85B7EB; }
+  .gate-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    background: #378ADD;
+    color: #E6F1FB;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .gate-btn:hover { background: #185FA5; }
+  .gate-error {
+    font-size: 12px; color: #f09595;
+    margin-top: 8px; min-height: 18px;
+  }
+  .gate-hint { font-size: 11px; color: #378ADD; margin-top: 16px; opacity: .7; }
+
+  /* ── MAIN ─────────────────────────────────────────────── */
+  #main { display: none; }
+
+  .page-wrap {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1rem 3rem;
+  }
+
+  canvas.confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
+  canvas.heart-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9998; }
+
+  .hero-full { background: #042C53; border-radius: 24px; padding: 2.5rem 2rem 2rem; margin-bottom: 12px; text-align: center; position: relative; overflow: hidden; }
+  .hero-circles { position: absolute; top: -60px; left: -60px; width: 200px; height: 200px; border-radius: 50%; border: 40px solid #0C447C; opacity: .4; }
+  .hero-circles2 { position: absolute; bottom: -80px; right: -40px; width: 240px; height: 240px; border-radius: 50%; border: 50px solid #185FA5; opacity: .25; }
+  .hero-eyebrow { font-size: 11px; font-weight: 500; color: #85B7EB; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 16px; position: relative; }
+  .hero-trophy { font-size: 40px; margin-bottom: 8px; position: relative; }
+  .hero-main { font-size: 30px; font-weight: 500; color: #E6F1FB; line-height: 1.2; margin-bottom: 12px; position: relative; }
+  .hero-divider { width: 40px; height: 3px; background: #378ADD; border-radius: 2px; margin: 16px auto; position: relative; }
+  .hero-sub { font-size: 15px; color: #85B7EB; line-height: 1.6; position: relative; max-width: 460px; margin: 0 auto; }
+
+  .secret-hint { font-size: 10px; color: #378ADD; opacity: .55; text-align: center; margin: 4px 0 8px; letter-spacing: .03em; }
+
+  .stat-hero-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; margin-bottom: 8px; }
+  .stat-hero { background: #185FA5; border-radius: 18px; padding: 20px 14px 16px; text-align: center; cursor: pointer; transition: transform .15s, background .15s; user-select: none; }
+  .stat-hero:hover { transform: translateY(-2px); background: #0C447C; }
+  .stat-hero:active { transform: scale(.97); }
+  .stat-hero-num { font-size: 28px; font-weight: 500; color: #E6F1FB; line-height: 1; }
+  .stat-hero-lbl { font-size: 11px; color: #85B7EB; margin-top: 6px; line-height: 1.4; }
+  .stat-hero-sub { font-size: 11px; color: #378ADD; margin-top: 4px; }
+
+  .feat-card { background: #0C447C; border-radius: 18px; padding: 18px 20px; margin-bottom: 8px; display: flex; gap: 16px; align-items: flex-start; }
+  .feat-icon-wrap { width: 44px; height: 44px; border-radius: 50%; background: #185FA5; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .feat-icon { font-size: 20px; color: #85B7EB; }
+  .feat-title { font-size: 14px; font-weight: 500; color: #E6F1FB; margin-bottom: 4px; line-height: 1.3; }
+  .feat-body { font-size: 13px; color: #85B7EB; line-height: 1.6; }
+  .feat-body strong { color: #B5D4F4; font-weight: 500; }
+  .feat-tag { font-size: 11px; background: #185FA5; color: #85B7EB; border-radius: 20px; padding: 3px 10px; display: inline-block; margin-top: 8px; }
+  .tkt-badge { display: inline-flex; align-items: center; gap: 3px; background: #185FA5; border: 1px solid #378ADD; border-radius: 20px; padding: 2px 8px; font-size: 12px; color: #B5D4F4; vertical-align: middle; }
+
+  .section-label { font-size: 11px; font-weight: 500; color: #185FA5; letter-spacing: .1em; text-transform: uppercase; margin: 16px 0 8px; padding-left: 2px; }
+
+  .kpi-deep-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; margin-bottom: 8px; }
+  .kpi-deep { background: #042C53; border-radius: 16px; padding: 16px 18px; cursor: pointer; transition: transform .15s; }
+  .kpi-deep:hover { transform: translateY(-2px); }
+  .kpi-deep-label { font-size: 11px; color: #378ADD; margin-bottom: 6px; }
+  .kpi-deep-val { font-size: 24px; font-weight: 500; color: #E6F1FB; line-height: 1; }
+  .kpi-deep-ctx { font-size: 12px; color: #85B7EB; margin-top: 4px; line-height: 1.4; }
+  .kpi-deep-bar { height: 4px; background: #0C447C; border-radius: 2px; margin-top: 10px; }
+  .kpi-deep-bar-fill { height: 100%; border-radius: 2px; background: #378ADD; }
+
+  .biz-section { background: #E6F1FB; border-radius: 18px; padding: 18px 20px; margin-bottom: 8px; }
+  .biz-section .section-label { color: #185FA5; margin-top: 0; }
+  .biz-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
+  .biz-tile { background: #fff; border-radius: 12px; padding: 12px 14px; cursor: pointer; transition: transform .15s; }
+  .biz-tile:hover { transform: translateY(-2px); }
+  .biz-tile-lbl { font-size: 11px; color: #185FA5; margin-bottom: 4px; }
+  .biz-tile-val { font-size: 18px; font-weight: 500; color: #042C53; }
+  .biz-tile-delta { font-size: 11px; color: #1D9E75; margin-top: 3px; font-weight: 500; }
+  .biz-insight { margin-top: 12px; background: #185FA5; border-radius: 12px; padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start; }
+  .biz-insight-text { font-size: 12px; color: #85B7EB; line-height: 1.5; }
+  .biz-insight-text strong { color: #E6F1FB; }
+
+  .voice-wrap { margin-bottom: 8px; }
+  .voice-slider { border-radius: 18px; min-height: 130px; }
+  .voice-slide { display: none; background: #185FA5; border-radius: 18px; padding: 22px 24px 18px; }
+  .voice-slide.active { display: block; }
+  .voice-text { font-size: 16px; color: #E6F1FB; line-height: 1.65; font-style: italic; margin-bottom: 14px; }
+  .voice-bar { display: flex; justify-content: space-between; align-items: center; }
+  .voice-tag-chip { font-size: 11px; background: #0C447C; color: #85B7EB; border-radius: 20px; padding: 4px 12px; }
+  .voice-nav-wrap { display: flex; gap: 6px; align-items: center; }
+  .v-dot { width: 8px; height: 8px; border-radius: 50%; background: #0C447C; cursor: pointer; transition: background .2s; }
+  .v-dot.active { background: #E6F1FB; }
+  .heart-btn { background: none; border: none; cursor: pointer; font-size: 18px; padding: 0 0 0 8px; transition: transform .15s; line-height: 1; color: #B5D4F4; }
+  .heart-btn:hover { transform: scale(1.3); }
+  .heart-btn.liked { color: #85B7EB; animation: heartPop .3s ease; }
+  @keyframes heartPop { 0%{transform:scale(1)} 50%{transform:scale(1.5)} 100%{transform:scale(1)} }
+  .voice-hint { font-size: 10px; color: #B5D4F4; opacity: .6; text-align: right; margin-top: 6px; }
+
+  .load-more-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: 8px; padding: 12px; background: #042C53; border: none; border-radius: 14px; color: #85B7EB; font-size: 13px; cursor: pointer; transition: background .2s; }
+  .load-more-btn:hover { background: #0C447C; color: #E6F1FB; }
+  .load-more-btn:disabled { opacity: .5; cursor: default; }
+  .spinner { width: 14px; height: 14px; border: 2px solid #378ADD; border-top-color: transparent; border-radius: 50%; animation: spin .7s linear infinite; flex-shrink: 0; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .extra-voices { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+  .extra-voice-card { background: #185FA5; border-radius: 14px; padding: 14px 18px; animation: fadeUp .4s ease; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .extra-voice-text { font-size: 14px; color: #E6F1FB; font-style: italic; margin-bottom: 6px; line-height: 1.5; }
+  .extra-voice-tag { font-size: 11px; color: #378ADD; }
+  .extra-heart-btn { background: none; border: none; cursor: pointer; font-size: 20px; color: #B5D4F4; flex-shrink: 0; padding: 0; transition: transform .15s; line-height: 1; margin-top: 2px; }
+  .extra-heart-btn:hover { transform: scale(1.3); }
+  .extra-heart-btn.liked { color: #85B7EB; animation: heartPop .3s ease; }
+
+  .closing { background: #185FA5; border-radius: 24px; padding: 2rem; text-align: center; margin-top: 8px; position: relative; overflow: hidden; }
+  .closing-circle { position: absolute; top: -50px; right: -50px; width: 160px; height: 160px; border-radius: 50%; border: 35px solid #0C447C; opacity: .5; }
+  .closing-title { font-size: 20px; font-weight: 500; color: #E6F1FB; margin-bottom: 10px; position: relative; }
+  .closing-body { font-size: 14px; color: #85B7EB; line-height: 1.7; position: relative; }
+  .closing-body strong { color: #E6F1FB; }
+  .closing-sig { margin-top: 16px; font-size: 13px; color: #378ADD; position: relative; }
+</style>
+</head>
+<body>
+
+<!-- GATE -->
+<div id="gate">
+  <div class="gate-box">
+    <div class="gate-trophy">🏆</div>
+    <p class="gate-title">Hot Sale 2026 · CX Tiendanube</p>
+    <p class="gate-sub">Este espacio es para el equipo. Ingresá con tu mail de Tiendanube para acceder.</p>
+    <input class="gate-input" type="email" id="gate-email" placeholder="tu@tiendanube.com" autocomplete="email" />
+    <button class="gate-btn" onclick="checkAccess()">Ingresar</button>
+    <p class="gate-error" id="gate-error"></p>
+    <p class="gate-hint">Solo cuentas @tiendanube.com y @nuvemshop.com.br</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+  <canvas class="confetti-canvas" id="confetti-canvas"></canvas>
+  <canvas class="heart-canvas" id="heart-canvas"></canvas>
+
+  <div class="page-wrap">
+
+    <div class="hero-full">
+      <div class="hero-circles"></div>
+      <div class="hero-circles2"></div>
+      <p class="hero-eyebrow">Hot Sale 2026 · 11 – 13 de mayo</p>
+      <div class="hero-trophy">🏆</div>
+      <p class="hero-main">Lo hicimos de nuevo.</p>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">En uno de los eventos más importantes del año, el equipo de CX no solo respondió — respondió bien, rápido y sin perder calidad en ningún frente.</p>
+    </div>
+
+    <p class="secret-hint">psst — hacé click en las tarjetas y sorprendete 😉</p>
+
+    <div class="stat-hero-grid">
+      <div class="stat-hero" onclick="boom(event)">
+        <div class="stat-hero-num">96,8%</div>
+        <div class="stat-hero-lbl">CSAT general</div>
+        <div class="stat-hero-sub">obj. 94% · superado</div>
+      </div>
+      <div class="stat-hero" onclick="boom(event)">
+        <div class="stat-hero-num">99,4%</div>
+        <div class="stat-hero-lbl">SLA 24hs</div>
+        <div class="stat-hero-sub">casi todos en el día</div>
+      </div>
+      <div class="stat-hero" onclick="boom(event)">
+        <div class="stat-hero-num">93%</div>
+        <div class="stat-hero-lbl">SLA att</div>
+        <div class="stat-hero-sub">objetivo alcanzado</div>
+      </div>
+    </div>
+
+    <div class="feat-card" style="margin-top:8px;">
+      <div class="feat-icon-wrap"><i class="ti ti-bolt feat-icon"></i></div>
+      <div>
+        <p class="feat-title">El lunes 11: 1.384 consultas en un solo día</p>
+        <p class="feat-body">El pico más alto del evento. <strong>Ningún equipo cedió</strong> en calidad ni en tiempos. Eso no pasa solo — pasa porque hay organización, criterio y compromiso real detrás.</p>
+        <span class="feat-tag">Pico del evento</span>
+      </div>
+    </div>
+
+    <div class="feat-card">
+      <div class="feat-icon-wrap"><i class="ti ti-trophy feat-icon"></i></div>
+      <div>
+        <p class="feat-title">Todos los equipos superaron el objetivo de CSAT</p>
+        <p class="feat-body">El objetivo era <strong>94%</strong>. <strong>Ninguno quedó por debajo</strong>. En el medio del evento más intenso del semestre, la calidad no cayó. Eso es cultura de equipo.</p>
+        <span class="feat-tag">100% de equipos</span>
+      </div>
+    </div>
+
+    <div class="feat-card">
+      <div class="feat-icon-wrap"><i class="ti ti-shield-check feat-icon"></i></div>
+      <div>
+        <p class="feat-title">SLA en todos los frentes, incluso con el altísimo volumen de las BUs</p>
+        <p class="feat-body">Core cerró en <strong>99,8%</strong>. Las BUs llegaron al <strong>99,1%</strong> — y eso es enorme si consideramos que Pago Nube gestionó <span class="tkt-badge"><i class="ti ti-message-circle" style="font-size:11px"></i> 822 tkts</span> y Envío Nube <span class="tkt-badge"><i class="ti ti-message-circle" style="font-size:11px"></i> 607 tkts</span>. Con ese volumen, llegar a esos números es el resultado directo de la colaboración y el compromiso de todo el equipo.</p>
+        <span class="feat-tag">Core + BUs</span>
+      </div>
+    </div>
+
+    <p class="section-label">KPIs en detalle</p>
+    <div class="kpi-deep-grid">
+      <div class="kpi-deep" onclick="boom(event)">
+        <div class="kpi-deep-label">SLA 24hs — Core</div>
+        <div class="kpi-deep-val">99,8%</div>
+        <div class="kpi-deep-ctx">Por encima del target. El mejor resultado del evento.</div>
+        <div class="kpi-deep-bar"><div class="kpi-deep-bar-fill" style="width:99.8%"></div></div>
+      </div>
+      <div class="kpi-deep" onclick="boom(event)">
+        <div class="kpi-deep-label">SLA 24hs — BUs</div>
+        <div class="kpi-deep-val">99,1%</div>
+        <div class="kpi-deep-ctx">Con el mayor volumen de tickets del evento.</div>
+        <div class="kpi-deep-bar"><div class="kpi-deep-bar-fill" style="width:99.1%"></div></div>
+      </div>
+      <div class="kpi-deep" onclick="boom(event)">
+        <div class="kpi-deep-label">Pago Nube</div>
+        <div class="kpi-deep-val">822 <i class="ti ti-message-circle" style="font-size:16px;color:#378ADD;vertical-align:middle"></i></div>
+        <div class="kpi-deep-ctx">Tickets atendidos. Objetivo de calidad superado.</div>
+        <div class="kpi-deep-bar"><div class="kpi-deep-bar-fill" style="width:73%"></div></div>
+      </div>
+      <div class="kpi-deep" onclick="boom(event)">
+        <div class="kpi-deep-label">Envío Nube</div>
+        <div class="kpi-deep-val">607 <i class="ti ti-message-circle" style="font-size:16px;color:#378ADD;vertical-align:middle"></i></div>
+        <div class="kpi-deep-ctx">Tickets atendidos. Objetivo de calidad superado.</div>
+        <div class="kpi-deep-bar"><div class="kpi-deep-bar-fill" style="width:54%"></div></div>
+      </div>
+    </div>
+
+    <div class="biz-section">
+      <p class="section-label">El evento que sostuvimos</p>
+      <div class="biz-grid">
+        <div class="biz-tile" onclick="boom(event)">
+          <div class="biz-tile-lbl">GMV total</div>
+          <div class="biz-tile-val">$59.151M</div>
+          <div class="biz-tile-delta">+33,3% vs HS25</div>
+        </div>
+        <div class="biz-tile" onclick="boom(event)">
+          <div class="biz-tile-lbl">Órdenes</div>
+          <div class="biz-tile-val">504.698</div>
+          <div class="biz-tile-delta">+12,2% vs HS25</div>
+        </div>
+        <div class="biz-tile" onclick="boom(event)">
+          <div class="biz-tile-lbl">Ticket promedio</div>
+          <div class="biz-tile-val">$117.000</div>
+          <div class="biz-tile-delta">+19% vs HS25</div>
+        </div>
+        <div class="biz-tile" onclick="boom(event)">
+          <div class="biz-tile-lbl">Productos vendidos</div>
+          <div class="biz-tile-val">1,77M</div>
+          <div class="biz-tile-delta">+9% vs HS25</div>
+        </div>
+      </div>
+      <div class="biz-insight">
+        <i class="ti ti-bulb" style="font-size:16px;color:#85B7EB;flex-shrink:0;margin-top:1px"></i>
+        <p class="biz-insight-text">Menos tráfico, mejor conversión: de <strong>1,24% → 1,76%</strong>. Casi <strong>7 de cada 10 órdenes</strong> incluyeron una promoción. El ecosistema funcionó — y CX fue parte de eso.</p>
+      </div>
+    </div>
+
+    <p class="section-label">Lo que dijeron nuestros merchants</p>
+    <div class="voice-wrap">
+      <div class="voice-slider" id="voice-slider">
+        <div class="voice-slide active">
+          <p class="voice-text">"En pánico entré con lo que me sucedió y me lo resolvieron rápido."</p>
+          <div class="voice-bar"><span class="voice-tag-chip">Velocidad y contención</span><div class="voice-nav-wrap"><div id="nav-0"></div><button class="heart-btn" onclick="heartSlide(event,0)">♥</button></div></div>
+        </div>
+        <div class="voice-slide">
+          <p class="voice-text">"Me encantó que entendieran que la urgencia del tema merecía que lo resuelvan en el momento."</p>
+          <div class="voice-bar"><span class="voice-tag-chip">Empatía real</span><div class="voice-nav-wrap"><div id="nav-1"></div><button class="heart-btn" onclick="heartSlide(event,1)">♥</button></div></div>
+        </div>
+        <div class="voice-slide">
+          <p class="voice-text">"Excelente seguimiento, ayuda paso a paso, todo muy bien explicado."</p>
+          <div class="voice-bar"><span class="voice-tag-chip">Claridad y acompañamiento</span><div class="voice-nav-wrap"><div id="nav-2"></div><button class="heart-btn" onclick="heartSlide(event,2)">♥</button></div></div>
+        </div>
+        <div class="voice-slide">
+          <p class="voice-text">"Me gustó mucho que con los pocos datos que tenía, pudieron solucionar mi problema. Eso muestra el profesionalismo."</p>
+          <div class="voice-bar"><span class="voice-tag-chip">Criterio y expertise</span><div class="voice-nav-wrap"><div id="nav-3"></div><button class="heart-btn" onclick="heartSlide(event,3)">♥</button></div></div>
+        </div>
+        <div class="voice-slide">
+          <p class="voice-text">"Siempre responden rápido y solucionan todos nuestros problemas. Excelente servicio, gracias."</p>
+          <div class="voice-bar"><span class="voice-tag-chip">Consistencia</span><div class="voice-nav-wrap"><div id="nav-4"></div><button class="heart-btn" onclick="heartSlide(event,4)">♥</button></div></div>
+        </div>
+      </div>
+      <p class="voice-hint">♥ para enviar amor al comentario</p>
+      <div class="extra-voices" id="extra-voices"></div>
+      <button class="load-more-btn" id="load-btn" onclick="loadMoreComments()">
+        <i class="ti ti-refresh"></i>
+        Ver más comentarios de nuestros merchants
+      </button>
+    </div>
+
+    <div class="closing">
+      <div class="closing-circle"></div>
+      <p class="closing-title">Gracias por hacer que esto se vea fácil.</p>
+      <p class="closing-body">No lo es. Detrás de cada número hay una conversación real, una persona del otro lado, una decisión tomada bajo presión. <strong>Eso es lo que hacemos.</strong> Y se nota — en los KPIs, y en las palabras de quienes nos eligen.</p>
+      <p class="closing-sig">CX Tiendanube · Hot Sale 2026</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── GATE ──────────────────────────────────────────────────
+const ALLOWED_DOMAINS = ['tiendanube.com', 'nuvemshop.com.br'];
+
+function checkAccess() {
+  const val = document.getElementById('gate-email').value.trim().toLowerCase();
+  const err = document.getElementById('gate-error');
+  if (!val.includes('@')) { err.textContent = 'Ingresá un email válido.'; return; }
+  const domain = val.split('@')[1];
+  if (!ALLOWED_DOMAINS.includes(domain)) {
+    err.textContent = 'Solo cuentas @tiendanube.com o @nuvemshop.com.br.';
+    return;
+  }
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('main').style.display = 'block';
+  setTimeout(() => spawnConfetti(window.innerWidth / 2, window.innerHeight / 2, 120), 300);
+}
+
+document.getElementById('gate-email').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkAccess();
+  document.getElementById('gate-error').textContent = '';
+});
+
+// ── COMMENTS ──────────────────────────────────────────────
+const ALL_COMMENTS = [
+  { text: "Siempre responden rápido y solucionan todos nuestros problemas. Excelente servicio, gracias.", tag: "Velocidad y resolución" },
+  { text: "La atención es excelente, rápida y con muy buena predisposición. Aclaran dudas, muestran ejemplos y resuelven el problema.", tag: "Dedicación" },
+  { text: "Excelente la atención y la explicación de Tomi, no dejó nada sin aclarar. Muchas gracias.", tag: "Claridad" },
+  { text: "Andrea solucionó mi inconveniente de forma rápida y super entendible. Gracias!!!", tag: "Resolución" },
+  { text: "impecable la atención como siempre!", tag: "Consistencia" },
+  { text: "Buenísima experiencia, super rápido y eficaz!", tag: "Eficiencia" },
+  { text: "Paloma fue muy amable y resolutiva con mi consulta.", tag: "Calidez" },
+  { text: "Excelente gestión.", tag: "Profesionalismo" },
+  { text: "Solucionaron el problema en el mismo día, mil gracias.", tag: "Velocidad" },
+  { text: "Super impecables como siempre.", tag: "Consistencia" },
+  { text: "Como siempre genial los chicos, resuelven todo rápido.", tag: "Agilidad" },
+  { text: "Gran atención como siempre.", tag: "Calidez" },
+];
+let shownExtras = 0;
+
+async function loadMoreComments() {
+  const btn = document.getElementById('load-btn');
+  const container = document.getElementById('extra-voices');
+  const remaining = ALL_COMMENTS.slice(shownExtras, shownExtras + 3);
+  if (!remaining.length) { btn.disabled = true; return; }
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div> Cargando...';
+  await new Promise(r => setTimeout(r, 600));
+  remaining.forEach((c, i) => {
+    const card = document.createElement('div');
+    card.className = 'extra-voice-card';
+    const idx = shownExtras + i;
+    card.innerHTML = `<div><p class="extra-voice-text">"${c.text}"</p><span class="extra-voice-tag">${c.tag}</span></div><button class="extra-heart-btn" onclick="heartCard(event,${idx})">♥</button>`;
+    container.appendChild(card);
+    setTimeout(() => heartsFromEl(card, 3), 200 + i * 150);
+  });
+  shownExtras += remaining.length;
+  btn.disabled = false;
+  if (shownExtras >= ALL_COMMENTS.length) {
+    btn.innerHTML = '<i class="ti ti-check"></i> Eso es todo — cada uno cuenta';
+    btn.disabled = true;
+  } else {
+    btn.innerHTML = '<i class="ti ti-refresh"></i> Ver más comentarios';
+  }
+}
+
+function heartCard(e, idx) { e.stopPropagation(); e.currentTarget.classList.toggle('liked'); heartsFromEl(e.currentTarget, 6); }
+function heartSlide(e, idx) { e.stopPropagation(); e.currentTarget.classList.toggle('liked'); heartsFromEl(e.currentTarget, 8); }
+
+// ── SLIDER ────────────────────────────────────────────────
+let vCur = 0;
+const vSlides = document.querySelectorAll('.voice-slide');
+const TOTAL = vSlides.length;
+
+function buildDots() {
+  for (let i = 0; i < TOTAL; i++) {
+    const nav = document.getElementById('nav-' + i);
+    if (!nav) continue;
+    nav.style.display = 'flex'; nav.style.gap = '6px';
+    nav.innerHTML = '';
+    for (let j = 0; j < TOTAL; j++) {
+      const d = document.createElement('div');
+      d.className = 'v-dot' + (j === vCur ? ' active' : '');
+      d.onclick = ((idx) => () => goVoice(idx))(j);
+      nav.appendChild(d);
+    }
+  }
+}
+function goVoice(n) { vSlides[vCur].classList.remove('active'); vCur = n; vSlides[vCur].classList.add('active'); buildDots(); }
+buildDots();
+setInterval(() => goVoice((vCur + 1) % TOTAL), 4500);
+
+// ── CANVASES ──────────────────────────────────────────────
+const cCanvas = document.getElementById('confetti-canvas');
+const cCtx = cCanvas.getContext('2d');
+const hCanvas = document.getElementById('heart-canvas');
+const hCtx = hCanvas.getContext('2d');
+function resizeCanvases() { cCanvas.width = hCanvas.width = window.innerWidth; cCanvas.height = hCanvas.height = window.innerHeight; }
+resizeCanvases();
+window.addEventListener('resize', resizeCanvases);
+
+// ── CONFETTI ──────────────────────────────────────────────
+let cParticles = [], cAnimating = false;
+const CONF_COLORS = ['#378ADD','#85B7EB','#B5D4F4','#E6F1FB','#185FA5','#0C447C','#1D9E75','#9FE1CB'];
+
+function boom(e) { const r = e.currentTarget.getBoundingClientRect(); spawnConfetti(r.left + r.width/2, r.top + r.height/2, 70); }
+
+function spawnConfetti(cx, cy, count) {
+  for (let i = 0; i < count; i++) {
+    const a = Math.random() * Math.PI * 2, s = 3 + Math.random() * 7;
+    cParticles.push({ x:cx, y:cy, vx:Math.cos(a)*s, vy:Math.sin(a)*s-4, r:4+Math.random()*6, color:CONF_COLORS[Math.floor(Math.random()*CONF_COLORS.length)], alpha:1, shape:Math.random()>.5?'circle':'rect', rot:Math.random()*Math.PI*2, rotSpeed:(Math.random()-.5)*.25, gravity:.2 });
+  }
+  if (!cAnimating) animateConfetti();
+}
+
+function animateConfetti() {
+  cAnimating = true;
+  cCtx.clearRect(0,0,cCanvas.width,cCanvas.height);
+  cParticles = cParticles.filter(p => p.alpha > .02);
+  cParticles.forEach(p => {
+    p.x+=p.vx; p.y+=p.vy; p.vy+=p.gravity; p.alpha-=.016; p.rot+=p.rotSpeed;
+    cCtx.save(); cCtx.globalAlpha=p.alpha; cCtx.fillStyle=p.color; cCtx.translate(p.x,p.y); cCtx.rotate(p.rot);
+    if (p.shape==='circle'){cCtx.beginPath();cCtx.arc(0,0,p.r,0,Math.PI*2);cCtx.fill();}
+    else{cCtx.fillRect(-p.r,-p.r/2,p.r*2,p.r);}
+    cCtx.restore();
+  });
+  if (cParticles.length>0) requestAnimationFrame(animateConfetti); else cAnimating=false;
+}
+
+// ── HEARTS ────────────────────────────────────────────────
+let hParticles = [], hAnimating = false;
+const HEART_COLORS = ['#85B7EB','#B5D4F4','#378ADD','#E6F1FB','#9FE1CB'];
+
+function heartsFromEl(el, count) {
+  const rect = el.getBoundingClientRect();
+  const cx = rect.left + rect.width/2, cy = rect.top + rect.height/2;
+  for (let i = 0; i < count; i++) {
+    hParticles.push({ x:cx+(Math.random()-.5)*30, y:cy, vy:-(1.5+Math.random()*2.5), vx:(Math.random()-.5)*1.2, size:12+Math.random()*14, alpha:1, color:HEART_COLORS[Math.floor(Math.random()*HEART_COLORS.length)], delay:i*80 });
+  }
+  if (!hAnimating) animateHearts();
+}
+
+function drawHeart(ctx,x,y,size,color,alpha) {
+  ctx.save(); ctx.globalAlpha=alpha; ctx.fillStyle=color;
+  const s=size/2;
+  ctx.beginPath();
+  ctx.moveTo(x,y+s*.35);
+  ctx.bezierCurveTo(x,y,x-s,y,x-s,y+s*.35);
+  ctx.bezierCurveTo(x-s,y+s*.7,x,y+s*1.1,x,y+s*1.4);
+  ctx.bezierCurveTo(x,y+s*1.1,x+s,y+s*.7,x+s,y+s*.35);
+  ctx.bezierCurveTo(x+s,y,x,y,x,y+s*.35);
+  ctx.fill(); ctx.restore();
+}
+
+function animateHearts() {
+  hAnimating = true;
+  hCtx.clearRect(0,0,hCanvas.width,hCanvas.height);
+  hParticles = hParticles.filter(p => p.alpha>.02);
+  hParticles.forEach(p => {
+    if (p.delay>0){p.delay-=16;return;}
+    p.x+=p.vx; p.y+=p.vy; p.vx+=(Math.random()-.5)*.08; p.alpha-=.013;
+    drawHeart(hCtx,p.x,p.y,p.size,p.color,p.alpha);
+  });
+  if (hParticles.length>0) requestAnimationFrame(animateHearts); else hAnimating=false;
+}
+</script>
+</body>
+</html>
